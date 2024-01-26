@@ -1,0 +1,131 @@
+body {
+    font-family: "Courier New", sans-serif;
+    background-color: white;
+    color: black;
+    margin: 0;
+    display: flex;
+}
+
+header {
+    background-color: white;
+    border-left: 1cm solid white;
+    padding: 10px;
+    z-index: 2;
+}
+
+#header-left {
+    font-size: 12px;
+    font-weight: normal;
+    text-transform: uppercase;
+}
+
+nav {
+    position: fixed;
+    left: 0.9cm;
+    top: 70px;
+    width: 20%;
+    background-color: #ffffff;
+    padding: 15px;
+    height: 100%;
+    overflow-y: auto;
+    z-index: 2;
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+li {
+    font-size: 12px;
+    margin-bottom: 7px;
+}
+
+a {
+    text-decoration: none;
+    color: black;
+}
+
+footer {
+    background-color: white;
+    text-align: left;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 10px;
+    z-index: 2;
+    padding-bottom: 20px;
+}
+
+.footer__container {
+    display: flex;
+    justify-content: space-between; /* Ajouter cette ligne si vous voulez les mettre en deux colonnes */
+    align-items: left; /* Pour l'alignement vertical des éléments enfants */
+    height: 30px; /* Adjust this value to control the distance between "Archives" and "Contact". */
+    flex-direction: column; /* Ajouter cette ligne pour le flex-direction */
+}
+
+.footer__item {
+    font-family: "Courier New", sans-serif;
+    font-weight: normal;
+    font-size: 12px;
+    margin-left: 1cm;
+    color: #333; /* Ajouter cette ligne pour spécifier la couleur des liens dans le footer */
+}
+
+/* Votre code CSS existant */
+
+#header-left {
+    font-size: 0.7em;
+}
+
+li {
+    font-size: 0.7em;
+    margin-bottom: 7px;
+}
+
+.footer__item {
+    font-size: 0.7em;
+    margin-left: 3.4em;
+}
+
+@media only screen and (max-width: 600px) {
+    nav {
+        width: 100%;
+        left: 0;
+    }
+}
+
+/* Ajoutez ce style pour décaler le contenu vers la droite */
+#project-content.shifted {
+    margin-left: 10%; /* Ajustez selon vos besoins */
+    margin-top: 75px;
+    z-index: 2;
+}
+
+/* Nouveau code pour le sous-menu */
+.has-submenu {
+    position: relative;
+}
+
+.submenu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: #ffffff;
+    padding: 10px;
+    padding-left: 15px;
+    padding-bottom: 5px;
+    border: 0px solid #ccc;
+}
+
+.has-submenu:hover .submenu {
+    display: block;
+}
+
+.has-submenu.active {
+    height: auto;
+    margin-top: 10px;
+}

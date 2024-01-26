@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Accueil - Maxime Decouard</title>
+    <link rel="stylesheet" type="text/css" href="/styles.css">
+</head>
+<body>
+    <header>
+        <div class="container" id="header">
+    <div id="header-left">
+            <p>Maxime <br>Decouard</p>
+    </div>
+    </header>
+    <nav>
+        <ul>
+            <li class="has-submenu" data-project="Projet 1">
+                <a href="#" onclick="showProject('Projet 1')">Costumes</a>
+                    <ul class="submenu">
+                        <li><a href="#" onclick="showProject('Sous-Projet 1-1')">Sous-Projet 1-1</a></li>
+                        <li><a href="#" onclick="showProject('Sous-Projet 1-2')">Sous-Projet 1-2</a></li>
+                    </ul>
+                </li>
+            <li><a href="#" onclick="showProject('Projet 2')">Dessins</a></li>
+            <li><a href="#" onclick="showProject('Projet 3')">Textes</a></li>
+        </ul>
+    </nav>
+    <main id="project-content">
+        <article>
+         <!-- Le contenu du projet sera affiché ici -->
+        </article>
+    </main>
+
+    <!-- ... Autres balises ... -->
+    <footer class="footer__container">
+        <a href="#" class="footer__item">Archives</a>
+        <a href="#" class="footer__item">Contact</a>
+    </footer>
+<!-- ... Autres balises ... -->
+    <script src="script.js"></script>
+</body>
+</html>
