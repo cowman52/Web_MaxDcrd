@@ -1,22 +1,20 @@
-// script.js
-
 document.addEventListener("DOMContentLoaded", function () {
     var hasSubmenus = document.querySelectorAll('.has-submenu');
     
-    // Variable pour suivre l'état du sous-menu
+    // Variable to track the state of the submenu
     var submenuOpen = false;
 
-    // Variable pour suivre l'état du projet ou sous-projet actuellement affiché
+    // Variable to track the currently displayed project or sub-project
     var currentProject = null;
 
-    // Variable pour stocker le dernier emplacement du projet ou sous-projet
+    // Variable to store the last position of the project or sub-project
     var lastProjectPosition = null;
 
-    // Gestion de l'affichage au survol
+    // Handling display on hover
     hasSubmenus.forEach(function (item) {
         item.addEventListener('mouseover', function () {
             if (!submenuOpen) {
-                // Ouvrez le sous-menu actuel seulement si le clic n'a pas été effectué
+                // Open the current submenu only if click has not been performed
                 this.querySelector('.submenu').style.display = 'block';
                 shiftMenuDown();
             }
@@ -24,51 +22,51 @@ document.addEventListener("DOMContentLoaded", function () {
 
         item.addEventListener('mouseout', function () {
             if (!submenuOpen) {
-                // Fermez le sous-menu seulement si le clic n'a pas été effectué
+                // Close the submenu only if click has not been performed
                 this.querySelector('.submenu').style.display = 'none';
                 shiftMenuUp();
             }
         });
     });
 
-    // Gestion de l'affichage au clic avec maintien
+    // Handling display on click and hold
     hasSubmenus.forEach(function (item) {
         item.addEventListener('click', function (event) {
-            // Inversez l'état du sous-menu
+            // Toggle the state of the submenu
             submenuOpen = !submenuOpen;
 
-            // Fermez tous les autres sous-menus
+            // Close all other submenus
             closeAllSubmenus();
 
-            // Ouvrez ou fermez le sous-menu actuel
+            // Open or close the current submenu
             var submenu = this.querySelector('.submenu');
             submenu.style.display = submenuOpen ? 'block' : 'none';
 
-            // Faites glisser le reste du menu en dessous ou remontez-le
+            // Slide the rest of the menu down or up
             if (submenuOpen) {
                 shiftMenuDown();
             } else {
                 shiftMenuUp();
             }
 
-            // Empêchez la propagation du clic pour éviter la fermeture immédiate
+            // Prevent click propagation to avoid immediate closure
             event.stopPropagation();
 
-            // Récupérez le nom du projet ou sous-projet
+            // Get the name of the project or sub-project
             var projectName = this.dataset.project;
 
-            // Affichez le projet ou sous-projet
+            // Display the project or sub-project
             showProject(projectName);
 
-            // Mettez à jour l'état du projet ou sous-projet actuellement affiché
+            // Update the state of the currently displayed project or sub-project
             currentProject = projectName;
 
-            // Stockez la position actuelle du projet ou sous-projet
+            // Store the current position of the project or sub-project
             lastProjectPosition = getProjectPosition();
         });
     });
 
-    // Fermez tous les sous-menus sauf celui actuellement cliqué
+    // Close all submenus except the one currently clicked
     function closeAllSubmenus() {
         hasSubmenus.forEach(function (item) {
             if (item !== event.currentTarget) {
@@ -78,35 +76,35 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
-    // Faites glisser le reste du menu en dessous
+    // Slide the rest of the menu down
     function shiftMenuDown() {
         var projectContent = document.getElementById("project-content");
         projectContent.classList.add("shifted");
-        projectContent.style.height = 'auto'; // Ajustez la hauteur selon vos besoins
+        projectContent.style.height = 'auto'; // Adjust height as needed
     }
 
-    // Remontez le reste du menu
+    // Slide the rest of the menu up
     function shiftMenuUp() {
         var projectContent = document.getElementById("project-content");
         projectContent.classList.remove("shifted");
     }
 
-    // Fonction pour afficher le projet ou sous-projet
+    // Function to display the project or sub-project
     function showProject(projectName) {
         var projectContent = document.getElementById("project-content");
 
-        // Vérifiez si le projet est déjà affiché
+        // Check if the project is already displayed
         if (currentProject !== projectName) {
-            // Récupérez la référence à l'élément parent du sous-menu
+            // Get a reference to the parent element of the submenu
             var submenuParent = document.querySelector('.has-submenu');
 
-            // Ajoutez une classe pour décaler vers la droite
+            // Add a class to shift right
             projectContent.classList.add("shifted");
 
-            // Ajoutez une classe pour ajuster la hauteur du parent du sous-menu
+            // Add a class to adjust the height of the submenu parent
             submenuParent.classList.add("active");
 
-            // Contenu fictif pour chaque projet ou sous-projet (vous pouvez remplacer cela par vos propres données)
+            // Dummy content for each project or sub-project (replace with your own data)
             var content = "";
             switch (projectName) {
                 case 'Projet 1':
@@ -124,22 +122,21 @@ document.addEventListener("DOMContentLoaded", function () {
                 case 'Sous-Projet 1-2':
                     content = "<h2>Sous-Projet 1-2</h2><p>Description du Sous-Projet 1-2...</p>";
                     break;
-                // Ajoutez des cas pour d'autres projets ou sous-projets au besoin
                 default:
                     content = "<p>Sélectionnez un projet ou sous-projet pour afficher le contenu.</p>";
             }
 
-            // Mettez à jour le contenu de la balise main avec le contenu du projet ou sous-projet sélectionné
+            // Update the content of the main tag with the content of the selected project or sub-project
             projectContent.innerHTML = content;
 
-            // Replacez le projet ou sous-projet à sa dernière position connue
+            // Return the project or sub-project to its last known position
             if (lastProjectPosition) {
                 setProjectPosition(lastProjectPosition);
             }
         }
     }
 
-    // Fonction pour récupérer la position du projet ou sous-projet
+    // Function to get the position of the project or sub-project
     function getProjectPosition() {
         var projectContent = document.getElementById("project-content");
         return {
@@ -148,27 +145,27 @@ document.addEventListener("DOMContentLoaded", function () {
         };
     }
 
-    // Fonction pour définir la position du projet ou sous-projet
+    // Function to set the position of the project or sub-project
     function setProjectPosition(position) {
         var projectContent = document.getElementById("project-content");
         projectContent.style.top = position.top;
         projectContent.style.left = position.left;
     }
 
-    // Ajoutez un gestionnaire de clic sur le contenu du projet pour maintenir l'affichage
+    // Add a click handler on the project content to maintain display
     var projectContent = document.getElementById("project-content");
     projectContent.addEventListener('click', function (event) {
-        event.stopPropagation(); // Empêchez la propagation du clic à la fenêtre principale
+        event.stopPropagation(); // Prevent click propagation to the main window
     });
 
-    // Fermez les sous-menus lorsqu'on clique ailleurs dans le document
+    // Close submenus when clicking elsewhere in the document
     document.addEventListener('click', function () {
         closeAllSubmenus();
-        submenuOpen = false; // Réinitialisez l'état du sous-menu
-        shiftMenuUp(); // Remontez le reste du menu
+        submenuOpen = false; // Reset submenu state
+        shiftMenuUp(); // Slide the rest of the menu up
     });
 
-    // Empêchez la fermeture du sous-menu lorsqu'on clique dessus
+    // Prevent closure of submenu when clicking on it
     hasSubmenus.forEach(function (item) {
         item.querySelector('.submenu').addEventListener('click', function (event) {
             event.stopPropagation();
