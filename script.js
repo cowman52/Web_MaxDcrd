@@ -1,21 +1,20 @@
 document.addEventListener("DOMContentLoaded", function () {
     var hasSubmenus = document.querySelectorAll('.has-submenu');
-    
-    // Variable to track the state of the submenu
+    var projectContent = document.getElementById("project-content");
+    var submenuParent = document.querySelector('.has-submenu');
     var submenuOpen = false;
-
-    // Variable to track the currently displayed project or sub-project
     var currentProject = null;
-
-    // Variable to store the last position of the project or sub-project
     var lastProjectPosition = null;
+
+    // ... (fonctions existantes)
 
     // Handling display on hover
     hasSubmenus.forEach(function (item) {
         item.addEventListener('mouseover', function () {
             if (!submenuOpen) {
                 // Open the current submenu only if click has not been performed
-                this.querySelector('.submenu').style.display = 'block';
+                var submenu = this.querySelector('.submenu');
+                submenu.style.display = 'block';
                 shiftMenuDown();
             }
         });
@@ -32,36 +31,25 @@ document.addEventListener("DOMContentLoaded", function () {
     // Handling display on click and hold
     hasSubmenus.forEach(function (item) {
         item.addEventListener('click', function (event) {
-            // Toggle the state of the submenu
             submenuOpen = !submenuOpen;
-
-            // Close all other submenus
             closeAllSubmenus();
 
-            // Open or close the current submenu
             var submenu = this.querySelector('.submenu');
             submenu.style.display = submenuOpen ? 'block' : 'none';
+            submenu.style.position = submenuOpen ? 'relative' : 'absolute';
 
-            // Slide the rest of the menu down or up
             if (submenuOpen) {
                 shiftMenuDown();
             } else {
                 shiftMenuUp();
             }
 
-            // Prevent click propagation to avoid immediate closure
             event.stopPropagation();
 
-            // Get the name of the project or sub-project
             var projectName = this.dataset.project;
-
-            // Display the project or sub-project
             showProject(projectName);
 
-            // Update the state of the currently displayed project or sub-project
             currentProject = projectName;
-
-            // Store the current position of the project or sub-project
             lastProjectPosition = getProjectPosition();
         });
     });
@@ -78,26 +66,19 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Slide the rest of the menu down
     function shiftMenuDown() {
-        var projectContent = document.getElementById("project-content");
-        projectContent.classList.add("shifted");
+        projectContent.classList.toggle("shifted", true);
         projectContent.style.height = 'auto'; // Adjust height as needed
     }
 
     // Slide the rest of the menu up
     function shiftMenuUp() {
-        var projectContent = document.getElementById("project-content");
-        projectContent.classList.remove("shifted");
+        projectContent.classList.toggle("shifted", false);
     }
 
     // Function to display the project or sub-project
     function showProject(projectName) {
-        var projectContent = document.getElementById("project-content");
-
         // Check if the project is already displayed
         if (currentProject !== projectName) {
-            // Get a reference to the parent element of the submenu
-            var submenuParent = document.querySelector('.has-submenu');
-
             // Add a class to shift right
             projectContent.classList.add("shifted");
 
@@ -108,7 +89,7 @@ document.addEventListener("DOMContentLoaded", function () {
             var content = "";
             switch (projectName) {
                 case 'Projet 1':
-                    content = "<h2>Costumes</h2><p>Description du Projet 1...</p>";
+                    content = null;
                     break;
                 case 'Projet 2':
                     content = "<h2>Dessins</h2><p>Description du Projet 2...</p>";
@@ -138,7 +119,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Function to get the position of the project or sub-project
     function getProjectPosition() {
-        var projectContent = document.getElementById("project-content");
         return {
             top: projectContent.style.top,
             left: projectContent.style.left
@@ -147,13 +127,11 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Function to set the position of the project or sub-project
     function setProjectPosition(position) {
-        var projectContent = document.getElementById("project-content");
         projectContent.style.top = position.top;
         projectContent.style.left = position.left;
     }
 
     // Add a click handler on the project content to maintain display
-    var projectContent = document.getElementById("project-content");
     projectContent.addEventListener('click', function (event) {
         event.stopPropagation(); // Prevent click propagation to the main window
     });

@@ -74,7 +74,6 @@ footer {
     color: #333; /* Ajouter cette ligne pour spécifier la couleur des liens dans le footer */
 }
 
-/* Votre code CSS existant */
 
 #header-left {
     font-size: 0.7em;
@@ -101,6 +100,7 @@ li {
 #project-content.shifted {
     margin-left: 10%; /* Ajustez selon vos besoins */
     margin-top: 75px;
+    z-index: 2;
 }
 
 .has-submenu {
@@ -109,7 +109,6 @@ li {
 
 .submenu {
     display: none;
-    position: absolute;
     top: 100%;
     left: 0;
     background-color: #ffffff;
