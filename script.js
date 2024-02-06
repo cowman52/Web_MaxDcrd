@@ -92,7 +92,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     content = null;
                     break;
                 case 'Projet 2':
-                    content = "<h2>Dessins</h2><p>Description du Projet 2...</p>";
+                    content = null;
                     break;
                 case 'Projet 3':
                     content = "<h2>Textes</h2><p>Description du Projet 3...</p>";
