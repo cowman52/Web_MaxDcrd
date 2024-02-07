@@ -11,18 +11,16 @@ header {
     border-left: 1cm solid white;
     padding: 10px;
     z-index: 2;
-    height: auto;
 }
 
 #header-left {
     font-size: 12px;
     font-weight: normal;
     text-transform: uppercase;
-    margin-bottom: -10px;
+    margin-bottom: -1em;
 }
-
 .subtitle {
-    font-size: 0.5em;
+    font-size: 0.7em;
     text-transform: lowercase;
 }
 
@@ -83,16 +81,16 @@ footer {
 
 
 #header-left {
-    font-size: 0.7em;
+    font-size: 1em;
 }
 
 li {
-    font-size: 0.7em;
+    font-size: 0.9em;
     margin-bottom: 7px;
 }
 
 .footer__item {
-    font-size: 0.7em;
+    font-size: 0.9em;
     margin-left: 3.4em;
 }
 
