@@ -14,7 +14,7 @@ header {
 }
 
 #header-left {
-    font-size: 12px;
+    font-size: 1em;
     font-weight: normal;
     text-transform: uppercase;
     margin-bottom: -1em;
@@ -40,7 +40,7 @@ ul {
 }
 
 li {
-    font-size: 12px;
+    font-size: 0.9em;
     margin-bottom: 7px;
 }
 
@@ -102,8 +102,8 @@ footer {
 .footer__item {
     font-family: "Courier New", sans-serif;
     font-weight: normal;
-    font-size: 12px;
-    margin-left: 1cm;
+    font-size: 0.9em;
+    margin-left: 3.4em;
     color: #333; /* Ajouter cette ligne pour spécifier la couleur des liens dans le footer */
 }
 
@@ -120,26 +120,61 @@ footer {
     font-size: 0.8em;
 }
 
+/* Styles pour les appareils mobiles */
+@media only screen and (max-width: 600px){ 
+    #header-left {
+        font-size: 1em;
+    }
 
-
-#header-left {
-    font-size: 1em;
-}
-
-li {
-    font-size: 0.9em;
-    margin-bottom: 7px;
-}
-
-.footer__item {
-    font-size: 0.9em;
-    margin-left: 3.4em;
-}
-
-@media only screen and (max-width: 600px) {
+    /* Redimensionner le menu de navigation pour qu'il occupe l'écran entier */
     nav {
         width: 100%;
         left: 3em;
+        top: 6em;
+        height: 100vh; /* Utiliser la hauteur de l'écran */
+        padding-top: 90px; /* Ajouter un décalage pour la barre de navigation fixée en haut */
+        overflow-y: auto; /* Ajouter un défilement si nécessaire */
+    }
+
+    /* Réduire la taille des éléments de menu */
+    li {
+        font-size: 1em;
+        margin-bottom: 5px;
+    }
+
+    /* Centrer le contenu principal */
+    #project-content {
+        position: relative;
+        top: 6em;
+        left: 0;
+        margin: 0 auto; /* Centrer horizontalement */
+        width: 6em; /* Utiliser la largeur disponible */
+        height: 6em;
+    }
+
+    /* Réduire la taille des vignettes de projet */
+    .project-thumbnail {
+        width: 90%; /* Utiliser la largeur disponible */
+        margin: 10px auto; /* Centrer horizontalement et ajouter une marge autour */
+    }
+
+    /* Réduire la taille du pied de page */
+    footer {
+        padding-bottom: 10px;
+    }
+
+    /* Réduire la taille des éléments de pied de page */
+    .footer__item {
+        font-size: 1em;
+        margin-left: 3em;
+    }
+
+    /* Réduire la taille de la vignette de contact */
+    .contact-thumbnail {
+        font-size: 1em;
+        top: 0em; /* Ajuster la position */
+        left: 1em;
+        width: 90%; /* Utiliser la largeur disponible */
+        margin: 0 auto; /* Centrer horizontalement */
     }
 }
-
