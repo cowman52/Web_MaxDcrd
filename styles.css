@@ -71,7 +71,7 @@ a {
 
 #project-content {
     position: absolute;
-    top: 7em;
+    top: 6em;
     left: 20em;
     display: flex; /* Activer le mode flex pour le conteneur */
     flex-wrap: wrap; /* Permettre aux éléments de passer à la ligne si nécessaire */
