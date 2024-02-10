@@ -1,152 +1,102 @@
 document.addEventListener("DOMContentLoaded", function () {
-    var hasSubmenus = document.querySelectorAll('.has-submenu');
     var projectContent = document.getElementById("project-content");
-    var submenuParent = document.querySelector('.has-submenu');
-    var submenuOpen = false;
-    var currentProject = null;
-    var lastProjectPosition = null;
+    var projectThumbnails = document.querySelectorAll('.project-thumbnail');
 
-    // ... (fonctions existantes)
+    // Récupérer le titre dans le header
+    var headerTitle = document.getElementById("header-left");
 
-    // Handling display on hover
-    hasSubmenus.forEach(function (item) {
-        item.addEventListener('mouseover', function () {
-            if (!submenuOpen) {
-                // Open the current submenu only if click has not been performed
-                var submenu = this.querySelector('.submenu');
-                submenu.style.display = 'block';
-                shiftMenuDown();
-            }
-        });
-
-        item.addEventListener('mouseout', function () {
-            if (!submenuOpen) {
-                // Close the submenu only if click has not been performed
-                this.querySelector('.submenu').style.display = 'none';
-                shiftMenuUp();
-            }
+    // Ajouter un gestionnaire d'événements pour le clic sur le titre
+    headerTitle.addEventListener('click', function () {
+        // Masquer tout le contenu du projet
+        projectContent.innerHTML = '';
+        // Afficher toutes les vignettes des projets
+        projectThumbnails.forEach(function (thumbnail) {
+            thumbnail.style.display = 'block';
         });
     });
 
-    // Handling display on click and hold
-    hasSubmenus.forEach(function (item) {
-        item.addEventListener('click', function (event) {
-            submenuOpen = !submenuOpen;
-            closeAllSubmenus();
+    var projectData = [
+        {
+            name: "Projet 1",
+            description: "Description du Projet 1...",
+            category: "scenography"
+        },
+        {
+            name: "Projet 2",
+            description: "Description du Projet 2...",
+            category: "drawings"
+        },
+        {
+            name: "Projet 3",
+            description: "Description du Projet 3...",
+            category: "drawings"
+        },
+        {
+            name: "Projet 4",
+            description: "Description du Projet 4...",
+            category: "scenography"
+        },
+        
+         // Autres données de projet...
+    ];
 
-            var submenu = this.querySelector('.submenu');
-            submenu.style.display = submenuOpen ? 'block' : 'none';
-            submenu.style.position = submenuOpen ? 'relative' : 'absolute';
+    // Générer dynamiquement les vignettes des projets
+    projectData.forEach(function (project, index) {
+        var projectThumbnail = document.createElement("div");
+        projectThumbnail.classList.add("project-thumbnail");
+        projectThumbnail.innerHTML = `<h2>${project.name}</h2><p>${project.description}</p>`;
+        projectContent.appendChild(projectThumbnail);
 
-            if (submenuOpen) {
-                shiftMenuDown();
-            } else {
-                shiftMenuUp();
-            }
-
-            event.stopPropagation();
-
-            var projectName = this.dataset.project;
-            showProject(projectName);
-
-            currentProject = projectName;
-            lastProjectPosition = getProjectPosition();
+        // Ajouter un gestionnaire d'événements pour afficher le contenu du projet lorsque la vignette est cliquée
+        projectThumbnail.addEventListener("click", function () {
+            showProject(project);
         });
     });
 
-    // Close all submenus except the one currently clicked
-    function closeAllSubmenus() {
-        hasSubmenus.forEach(function (item) {
-            if (item !== event.currentTarget) {
-                var submenu = item.querySelector('.submenu');
-                submenu.style.display = 'none';
-            }
-        });
+    // Fonction pour afficher le contenu du projet
+    function showProject(project) {
+        // Mettre à jour la section principale avec le contenu du projet
+        projectContent.innerHTML = `<h2>${project.name}</h2><p>${project.description}</p>`;
+        // Ajoutez d'autres éléments HTML pour les images, les liens, etc., si nécessaire
     }
 
-    // Slide the rest of the menu down
-    function shiftMenuDown() {
-        projectContent.classList.toggle("shifted", true);
-        projectContent.style.height = 'auto'; // Adjust height as needed
-    }
+    // Récupérer les éléments du menu
+    var projectCategories = document.querySelectorAll('.project-category');
 
-    // Slide the rest of the menu up
-    function shiftMenuUp() {
-        projectContent.classList.toggle("shifted", false);
-    }
+    // Ajouter un gestionnaire d'événements pour chaque élément du menu
+    projectCategories.forEach(function (category) {
+        category.addEventListener('click', function () {
+            var categoryName = category.dataset.category;
 
-    // Function to display the project or sub-project
-    function showProject(projectName) {
-        // Check if the project is already displayed
-        if (currentProject !== projectName) {
-            // Add a class to shift right
-            projectContent.classList.add("shifted");
+            // Réinitialiser le contenu des projets
+            projectContent.innerHTML = '';
 
-            // Add a class to adjust the height of the submenu parent
-            submenuParent.classList.add("active");
+            // Afficher les vignettes correspondant à la catégorie sélectionnée
+            projectData.forEach(function (project) {
+                if (project.category === categoryName) {
+                    // Créer une vignette pour chaque projet de la catégorie
+                    var projectThumbnail = document.createElement("div");
+                    projectThumbnail.classList.add("project-thumbnail");
+                    projectThumbnail.innerHTML = `<h2>${project.name}</h2><p>${project.description}</p>`;
+                    projectContent.appendChild(projectThumbnail);
 
-            // Dummy content for each project or sub-project (replace with your own data)
-            var content = "";
-            switch (projectName) {
-                case 'Projet 1':
-                    content = null;
-                    break;
-                case 'Projet 2':
-                    content = null;
-                    break;
-                case 'Projet 3':
-                    content = "<h2>Textes</h2><p>Description du Projet 3...</p>";
-                    break;
-                case 'Sous-Projet 1-1':
-                    content = "<h2>Sous-Projet 1-1</h2><p>Description du Sous-Projet 1-1...</p>";
-                    break;
-                case 'Sous-Projet 1-2':
-                    content = "<h2>Sous-Projet 1-2</h2><p>Description du Sous-Projet 1-2...</p>";
-                    break;
-                default:
-                    content = "<p>Sélectionnez un projet ou sous-projet pour afficher le contenu.</p>";
-            }
-
-            // Update the content of the main tag with the content of the selected project or sub-project
-            projectContent.innerHTML = content;
-
-            // Return the project or sub-project to its last known position
-            if (lastProjectPosition) {
-                setProjectPosition(lastProjectPosition);
-            }
-        }
-    }
-
-    // Function to get the position of the project or sub-project
-    function getProjectPosition() {
-        return {
-            top: projectContent.style.top,
-            left: projectContent.style.left
-        };
-    }
-
-    // Function to set the position of the project or sub-project
-    function setProjectPosition(position) {
-        projectContent.style.top = position.top;
-        projectContent.style.left = position.left;
-    }
-
-    // Add a click handler on the project content to maintain display
-    projectContent.addEventListener('click', function (event) {
-        event.stopPropagation(); // Prevent click propagation to the main window
-    });
-
-    // Close submenus when clicking elsewhere in the document
-    document.addEventListener('click', function () {
-        closeAllSubmenus();
-        submenuOpen = false; // Reset submenu state
-        shiftMenuUp(); // Slide the rest of the menu up
-    });
-
-    // Prevent closure of submenu when clicking on it
-    hasSubmenus.forEach(function (item) {
-        item.querySelector('.submenu').addEventListener('click', function (event) {
-            event.stopPropagation();
+                    // Ajouter un gestionnaire d'événements pour afficher le contenu du projet lorsque la vignette est cliquée
+                    projectThumbnail.addEventListener("click", function () {
+                        showProject(project);
+                    });
+                }
+            });
         });
     });
+
+    // Ajouter un gestionnaire d'événements pour le clic sur "Contact"
+var contactFooter = document.querySelector('.footer__container.project-category[data-category="contact"]');
+contactFooter.addEventListener('click', function () {
+    // Afficher une vignette de contact
+    var contactThumbnail = document.createElement("div");
+    contactThumbnail.classList.add("contact-thumbnail"); // Ajoutez la classe spécifique
+    contactThumbnail.innerHTML = "<p>maxdcrd@protonmail.com</p>";
+    projectContent.innerHTML = ''; // Effacer le contenu actuel
+    projectContent.appendChild(contactThumbnail);
+});
 });
