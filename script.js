@@ -2,6 +2,11 @@ document.addEventListener("DOMContentLoaded", function () {
     var projectContent = document.getElementById("project-content");
     var projectThumbnails = document.querySelectorAll('.project-thumbnail');
 
+    // Masquer toutes les vignettes au chargement de la page
+    projectThumbnails.forEach(function (thumbnail) {
+        thumbnail.style.display = 'none';
+    });
+
     // Récupérer le titre dans le header
     var headerTitle = document.getElementById("header-left");
 
@@ -36,22 +41,30 @@ document.addEventListener("DOMContentLoaded", function () {
             description: "Description du Projet 4...",
             category: "scenography"
         },
-        
-         // Autres données de projet...
+        // Autres données de projet...
     ];
 
-    // Générer dynamiquement les vignettes des projets
-    projectData.forEach(function (project, index) {
-        var projectThumbnail = document.createElement("div");
-        projectThumbnail.classList.add("project-thumbnail");
-        projectThumbnail.innerHTML = `<h2>${project.name}</h2><p>${project.description}</p>`;
-        projectContent.appendChild(projectThumbnail);
+    // Fonction pour générer et afficher les vignettes correspondant à une catégorie
+    function showThumbnails(categoryName) {
+        // Réinitialiser le contenu des projets
+        projectContent.innerHTML = '';
 
-        // Ajouter un gestionnaire d'événements pour afficher le contenu du projet lorsque la vignette est cliquée
-        projectThumbnail.addEventListener("click", function () {
-            showProject(project);
+        // Afficher les vignettes correspondant à la catégorie sélectionnée
+        projectData.forEach(function (project) {
+            if (project.category === categoryName) {
+                // Créer une vignette pour chaque projet de la catégorie
+                var projectThumbnail = document.createElement("div");
+                projectThumbnail.classList.add("project-thumbnail");
+                projectThumbnail.innerHTML = `<h2>${project.name}</h2><p>${project.description}</p>`;
+                projectContent.appendChild(projectThumbnail);
+
+                // Ajouter un gestionnaire d'événements pour afficher le contenu du projet lorsque la vignette est cliquée
+                projectThumbnail.addEventListener("click", function () {
+                    showProject(project);
+                });
+            }
         });
-    });
+    }
 
     // Fonction pour afficher le contenu du projet
     function showProject(project) {
@@ -68,35 +81,19 @@ document.addEventListener("DOMContentLoaded", function () {
         category.addEventListener('click', function () {
             var categoryName = category.dataset.category;
 
-            // Réinitialiser le contenu des projets
-            projectContent.innerHTML = '';
-
-            // Afficher les vignettes correspondant à la catégorie sélectionnée
-            projectData.forEach(function (project) {
-                if (project.category === categoryName) {
-                    // Créer une vignette pour chaque projet de la catégorie
-                    var projectThumbnail = document.createElement("div");
-                    projectThumbnail.classList.add("project-thumbnail");
-                    projectThumbnail.innerHTML = `<h2>${project.name}</h2><p>${project.description}</p>`;
-                    projectContent.appendChild(projectThumbnail);
-
-                    // Ajouter un gestionnaire d'événements pour afficher le contenu du projet lorsque la vignette est cliquée
-                    projectThumbnail.addEventListener("click", function () {
-                        showProject(project);
-                    });
-                }
-            });
+            // Appeler la fonction pour afficher les vignettes correspondant à la catégorie sélectionnée
+            showThumbnails(categoryName);
         });
     });
 
     // Ajouter un gestionnaire d'événements pour le clic sur "Contact"
-var contactFooter = document.querySelector('.footer__container.project-category[data-category="contact"]');
-contactFooter.addEventListener('click', function () {
-    // Afficher une vignette de contact
-    var contactThumbnail = document.createElement("div");
-    contactThumbnail.classList.add("contact-thumbnail"); // Ajoutez la classe spécifique
-    contactThumbnail.innerHTML = "<p>maxdcrd@protonmail.com</p>";
-    projectContent.innerHTML = ''; // Effacer le contenu actuel
-    projectContent.appendChild(contactThumbnail);
-});
+    var contactFooter = document.querySelector('.footer__container.project-category[data-category="contact"]');
+    contactFooter.addEventListener('click', function () {
+        // Afficher une vignette de contact
+        var contactThumbnail = document.createElement("div");
+        contactThumbnail.classList.add("contact-thumbnail"); // Ajoutez la classe spécifique
+        contactThumbnail.innerHTML = "<p>maxdcrd@protonmail.com</p>";
+        projectContent.innerHTML = ''; // Effacer le contenu actuel
+        projectContent.appendChild(contactThumbnail);
+    });
 });

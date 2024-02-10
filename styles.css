@@ -50,6 +50,7 @@ a {
 }
 
 .project-thumbnail {
+    display: block;
     border: 1px solid #756060;
     padding: 1em;
     flex: 0 0 auto; /* Permettre aux vignettes de conserver leur taille d'origine */
