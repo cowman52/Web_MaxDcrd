@@ -7,7 +7,8 @@ body {
 }
 
 header {
-   background-color: white;
+    position: fixed;
+    background-color: white;
     border-left: 1cm solid white;
     padding: 10px;
     z-index: 2;
@@ -78,6 +79,21 @@ a {
     flex-wrap: wrap; /* Permettre aux éléments de passer à la ligne si nécessaire */
     justify-content: space-around; /* Répartir l'espace disponible de manière égale entre les éléments */
     z-index: 2;
+}
+
+.project-details {
+    text-align: left; /* Centrer le contenu horizontalement */
+    margin-right: 3em; /* Ajouter une marge à droite */
+    margin-top: 1em;
+}
+
+.project-details img {
+    display: block; /* Afficher l'image en tant que bloc pour gérer la marge automatique */
+    margin: 0 auto; /* Centrer l'image horizontalement */
+}
+
+.project-details p {
+    margin-top: 10px; /* Ajouter une marge en haut du paragraphe */
 }
 
 footer {
