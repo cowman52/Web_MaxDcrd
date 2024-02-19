@@ -73,33 +73,28 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
-    function loadProjectInfo(projectName) {
-    // Faire une requête AJAX pour charger les informations depuis le fichier texte
-    var xhr = new XMLHttpRequest();
-    xhr.open('GET', 'https://maxdcrd.com/content/Dessins/ton_desir_desc.txt', true);
-    xhr.onreadystatechange = function () {
-        if (xhr.readyState === XMLHttpRequest.DONE) {
-            if (xhr.status === 200) {
-                // Séparer les informations pour chaque projet
-                var projectsInfo = xhr.responseText.split('#');
-                projectsInfo.forEach(function (info) {
-                    var lines = info.trim().split('\n');
-                    if (lines[0].trim() === '#' + projectName) {
-                        var projectInfo = lines.slice(1).join('\n');
-                        displayProjectInfo(projectInfo);
-                    }
-                });
+    // Récupérer l'élément du menu "Textes"
+    var textMenu = document.querySelector('.project-category[data-category="texts"]');
+    
+    // Ajouter un gestionnaire d'événements pour le clic sur le menu "Textes"
+    textMenu.addEventListener('click', function() {
+        // Faire une requête AJAX pour charger le contenu du fichier texte
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET', '/content/Textes/Ce qui sentasse.txt', true);
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === XMLHttpRequest.DONE) {
+                if (xhr.status === 200) {
+                    // Afficher le contenu du fichier texte dans une balise HTML appropriée
+                    var content = xhr.responseText;
+                    var textContainer = document.getElementById('project-info'); // Remplacez 'project-info' par l'ID de l'élément où vous souhaitez afficher le texte
+                    textContainer.innerHTML = content;
+                } else {
+                    console.error('Erreur lors du chargement du fichier texte');
+                }
             }
-        }
-    };
-    xhr.send();
-}
-
-    function displayProjectInfo(info) {
-        // Afficher les informations supplémentaires dans la page HTML
-        var projectInfoElement = document.getElementById('project-info');
-            projectInfoElement.innerHTML = '<h3>Informations supplémentaires</h3><p>' + info + '</p>';
-}
+        };
+        xhr.send();
+    });
 
     // Fonction pour afficher le contenu du projet
     function showProject(project) {
@@ -129,7 +124,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         // Charger les informations supplémentaires du projet
         loadProjectInfo(project.name);
-}
+    }
 
     // Récupérer les éléments du menu
     var projectCategories = document.querySelectorAll('.project-category');
