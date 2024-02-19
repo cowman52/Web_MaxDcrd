@@ -4,7 +4,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Masquer toutes les vignettes au chargement de la page
     projectThumbnails.forEach(function (thumbnail) {
-        thumbnail.style.display = 'none';
+    thumbnail.style.display = 'none';
     });
 
     // Récupérer le titre dans le header
@@ -68,8 +68,8 @@ document.addEventListener("DOMContentLoaded", function () {
         });
 
         // Afficher les vignettes
-        projectThumbnails.forEach(function (thumbnail) {
-            thumbnail.style.display = 'block';
+            projectThumbnails.forEach(function (thumbnail) {
+        thumbnail.style.display = 'block';
         });
     }
 
