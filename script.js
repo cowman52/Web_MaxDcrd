@@ -83,7 +83,7 @@ document.addEventListener("DOMContentLoaded", function () {
     textMenu.addEventListener('click', function() {
         // Faire une requête AJAX pour charger le contenu du fichier texte
         var xhr = new XMLHttpRequest();
-        xhr.open('GET', 'public.html/content/Textes/Ce_qui_s_entasse.txt', true);
+        xhr.open('GET', 'https://maxdcrd.com/content/Textes/Ce_qui_s_entasse.txt', true);
         xhr.onreadystatechange = function () {
             if (xhr.readyState === XMLHttpRequest.DONE) {
                 if (xhr.status === 200) {
