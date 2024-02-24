@@ -4,7 +4,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Masquer toutes les vignettes au chargement de la page
     projectThumbnails.forEach(function (thumbnail) {
-    thumbnail.style.display = 'none';
+        // Exclure l'élément avec l'ID 'project-info' de la logique de masquage
+        if (thumbnail.id !== 'project-info') {
+        thumbnail.style.display = 'none';
+     }
     });
 
     // Récupérer le titre dans le header
@@ -80,7 +83,7 @@ document.addEventListener("DOMContentLoaded", function () {
     textMenu.addEventListener('click', function() {
         // Faire une requête AJAX pour charger le contenu du fichier texte
         var xhr = new XMLHttpRequest();
-        xhr.open('GET', '/content/Textes/Ce qui sentasse.txt', true);
+        xhr.open('GET', 'public.html/content/Textes/Ce_qui_s_entasse.txt', true);
         xhr.onreadystatechange = function () {
             if (xhr.readyState === XMLHttpRequest.DONE) {
                 if (xhr.status === 200) {
