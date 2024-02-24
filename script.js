@@ -4,10 +4,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Masquer toutes les vignettes au chargement de la page
     projectThumbnails.forEach(function (thumbnail) {
-        // Exclure l'élément avec l'ID 'project-info' de la logique de masquage
-        if (thumbnail.id !== 'project-info') {
-        thumbnail.style.display = 'none';
-     }
+        // Exclure l'élément avec l'ID 'project-info' et la classe 'project-category' de la logique de masquage
+        if (!((thumbnail.id == 'project-info') || (thumbnail.className == 'project-category'))) {
+            thumbnail.style.display = 'none';
+        }
     });
 
     // Récupérer le titre dans le header
@@ -23,77 +23,56 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
 
-    var projectData = [
-        {
-            name: "Projet 1",
-            description: "Description du Projet 1...",
-            category: "scenography"
-        },
-        {
-            name: "Ton désir me transforme en cheval",
-            description: "Ton désir me transforme en cheval",
-            category: "drawings",
-            image: "https://maxdcrd.com/content/Dessins/ton_desir_me_transforme.jpg"
-        },
-        {
-            name: "Projet 3",
-            description: "Description du Projet 3...",
-            category: "drawings"
-        },
-        {
-            name: "Projet 4",
-            description: "Description du Projet 4...",
-            category: "scenography"
-        },
-        // Autres données de projet...
-    ];
+    var projectData = [{
+        name: "Projet 1",
+        description: "Description du Projet 1...",
+        category: "scenography"
+    }, {
+        name: "Ton désir me transforme en cheval",
+        description: "Ton désir me transforme en cheval",
+        category: "drawings",
+        image: "https://maxdcrd.com/content/Dessins/ton_desir_me_transforme.jpg"
+    }, {
+        name: "Projet 3",
+        description: "Description du Projet 3...",
+        category: "drawings"
+    }, {
+        name: "Projet 4",
+        description: "Description du Projet 4...",
+        category: "scenography"
+    }];
 
-    // Fonction pour générer et afficher les vignettes correspondant à une catégorie
     function showThumbnails(categoryName) {
-        // Réinitialiser le contenu des projets
-        projectContent.innerHTML = '';
-
-        // Afficher les vignettes correspondant à la catégorie sélectionnée
+        projectContent.innerHTML = "";
         projectData.forEach(function (project) {
             if (project.category === categoryName) {
-                // Créer une vignette pour chaque projet de la catégorie
                 var projectThumbnail = document.createElement("div");
                 projectThumbnail.classList.add("project-thumbnail");
-                projectThumbnail.innerHTML = `<h2>${project.name}</h2><p>${project.description}</p>`;
+                projectThumbnail.innerHTML = "<h2>" + project.name + "</h2><p>" + project.description + "</p>";
                 projectContent.appendChild(projectThumbnail);
-
-                // Ajouter un gestionnaire d'événements pour afficher le contenu du projet lorsque la vignette est cliquée
                 projectThumbnail.addEventListener("click", function () {
                     showProject(project);
                     loadProjectInfo(project.name);
                 });
             }
         });
-
-        // Afficher les vignettes
-            projectThumbnails.forEach(function (thumbnail) {
-        thumbnail.style.display = 'block';
+        projectThumbnails.forEach(function (thumbnail) {
+            thumbnail.style.display = "block";
         });
     }
 
-    // Récupérer l'élément du menu "Textes"
-    var textMenu = document.querySelector('.project-category[data-category="texts"]');
-    
-    // Ajouter un gestionnaire d'événements pour le clic sur le menu "Textes"
-    textMenu.addEventListener('click', function() {
-        // Faire une requête AJAX pour charger le contenu du fichier texte
+    // Déclaration de textMenu pour la partie "Textes"
+    var textMenu = document.querySelector(".project-category[data-category=\"texts\"]");
+
+    // Ajout de l'écouteur d'événements pour la partie "Textes"
+    textMenu.addEventListener("click", function () {
         var xhr = new XMLHttpRequest();
-        xhr.open('GET', 'https://maxdcrd.com/content/Textes/Ce_qui_s_entasse.txt', true);
+        xhr.open("GET", "https://maxdcrd.com/content/Textes/Ce_qui_s_entasse.txt", true);
         xhr.onreadystatechange = function () {
-            if (xhr.readyState === XMLHttpRequest.DONE) {
-                if (xhr.status === 200) {
-                    // Afficher le contenu du fichier texte dans une balise HTML appropriée
-                    var content = xhr.responseText;
-                    var textContainer = document.getElementById('project-info'); // Remplacez 'project-info' par l'ID de l'élément où vous souhaitez afficher le texte
-                    textContainer.innerHTML = content;
-                } else {
-                    console.error('Erreur lors du chargement du fichier texte');
-                }
+            if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+                var content = xhr.responseText;
+                var textContainer = document.getElementById("project-info");
+                textContainer.innerHTML = content;
             }
         };
         xhr.send();
@@ -144,12 +123,18 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Ajouter un gestionnaire d'événements pour le clic sur "Contact"
     var contactFooter = document.querySelector('.footer__container.project-category[data-category="contact"]');
-    contactFooter.addEventListener('click', function () {
-        // Afficher une vignette de contact
-        var contactThumbnail = document.createElement("div");
-        contactThumbnail.classList.add("contact-thumbnail"); // Ajoutez la classe spécifique
-        contactThumbnail.innerHTML = "<p>maxdcrd@protonmail.com</p>";
-        projectContent.innerHTML = ''; // Effacer le contenu actuel
-        projectContent.appendChild(contactThumbnail);
+    contactFooter.addEventListener('click', function (event) {
+        // Empêcher le comportement par défaut du lien
+        event.preventDefault();
+
+        // Vérifier si le clic a été effectué sur le lien "Contact"
+        if (event.target.classList.contains('footer__item')) {
+            // Afficher une vignette de contact
+            var contactThumbnail = document.createElement("div");
+            contactThumbnail.classList.add("contact-thumbnail");
+            contactThumbnail.innerHTML = "<p>maxdcrd@protonmail.com</p>";
+            projectContent.innerHTML = ''; // Effacer le contenu actuel
+            projectContent.appendChild(contactThumbnail);
+        }
     });
 });
