@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>dessins</title>
+    <link rel="stylesheet" type="text/css" href="/styles.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+$(document).ready(function(){
+    // Gérer les clics sur les liens du menu pour les autres pages
+    $('nav a:not(.load-textes)').click(function(event){
+        event.preventDefault();
+        var page_url = $(this).attr('href');
+        // Ajouter un paramètre aléatoire pour empêcher la mise en cache
+        var random_param = '?nocache=' + Math.random();
+        // Charger le contenu de la page avec le paramètre aléatoire
+        $('#project-content').load(page_url + random_param + ' #project-content > *', function(responseText, textStatus, XMLHttpRequest) {
+            if (textStatus === "success" || textStatus === "notmodified") {
+                // Réinitialiser des événements JavaScript ou plugins si nécessaire
+            }
+        });
+    });
+
+    // Gérer les clics sur les liens du menu "Textes"
+    $('nav a.load-textes').click(function(event){
+        event.preventDefault();
+        var page_url = $(this).attr('href');
+        $('#project-content').empty(); // Vider le contenu existant
+        // Charger le contenu des fichiers texte
+        fetch('content/Textes/Textes.txt')
+            .then(response => response.text())
+            .then(text => {
+                // Utiliser le contenu du texte pour l'afficher sur ta page HTML
+                $('#project-content').html(text);
+            });
+    });
+});
+
+</script>
+
+
+</head>
+<body>
+    <header>
+        <div class="container" id="header">
+            <div id="header-left">
+                <p><a href="index.html">Maxime Decouard<br></a></p>
+            </div>
+            <div class="subtitle">
+                <p><a href="index.html">plasticien scénographe</a></p>
+            </div>
+        </div>
+    </header>
+
+    <nav>
+        <ul>
+            <li class="project-category" data-category="scenography">
+                <a href="scenographie_costume.html"> Scénographie /<br>Costumes</a>
+            </li>
+            <li class="project-category" data-category="drawings">
+                <a href="dessins.html" >Dessins</a>
+            </li>
+            <li class="project-category" data-category="texts">
+                <a href="textes.html" class="load-textes">Textes</a>
+            </li>
+        </ul>
+    </nav>
+
+    <main id="project-content">
+        <section id="project-thumbnails">
+            <div class="project-thumbnail thumbnail">
+                <a href="projet1.html">
+                    <img src="content/thumbnails/Etude_pour_le_depeupleur_thumb.jpg" alt="Étude pour le Dépeupleur" class="thumbnail-image">
+                    <h2 class="thumbnail-title">Étude pour le Dépeupleur</h2>
+                </a>
+            </div>
+
+            <!-- Répétez cette structure pour chaque projet -->
+            
+            <div class="project-thumbnail thumbnail">
+                <a href="projet2.html">
+                    <img src="content/thumbnails/ton_désir_me_transforme_thumb.jpg" alt="Ton désir me transforme en cheval" class="thumbnail-image">
+                    <h2 class="thumbnail-title">Ton désir me transforme en cheval</h2>
+                </a>
+            </div>
+
+            <div class="project-thumbnail thumbnail">
+                <a href="projet2.html">
+                    <img src="content/thumbnails/La_bonne_nuit_thumb.jpg" alt="La bonne nuit" class="thumbnail-image">
+                    <h2 class="thumbnail-title">La bonne nuit (petite mère)</h2>
+                </a>
+            </div>
+
+            <div class="project-thumbnail thumbnail">
+                <a href="projet2.html">
+                    <img src="content/thumbnails/L'industrie_les_ petits_pères_thumb.jpg" alt="L'industrie" class="thumbnail-image">
+                    <h2 class="thumbnail-title">L'industrie (les petits pères)</h2>
+                </a>
+            </div>
+
+            <div class="project-thumbnail thumbnail">
+                <a href="projet2.html">
+                    <img src="content/thumbnails/Les_Traditions_Dansées_thumb.jpg" alt="les traditions dansées" class="thumbnail-image">
+                    <h2 class="thumbnail-title">Les traditions dansées</h2>
+                </a>
+            </div>
+
+            <div class="project-thumbnail thumbnail">
+                <a href="projet2.html">
+                    <img src="content/thumbnails/D_ailleurs_les_pierres_ne_parlent_pas_thumb.jpg" alt="D'ailleurs les pierres ne résonnent pas" class="thumbnail-image">
+                    <h2 class="thumbnail-title">D'ailleurs les pierres ne résonnent pas</h2>
+                </a>
+            </div>
+
+            <div class="project-thumbnail thumbnail">
+                <a href="projet2.html">
+                    <img src="content/thumbnails/le_règne_de_l_encéphale_thumb.jpg" alt="Le règne de l'encéphale" class="thumbnail-image">
+                    <h2 class="thumbnail-title">Le règne de l'encéphale</h2>
+                </a>
+            </div>
+
+            <div class="project-thumbnail thumbnail">
+                <a href="projet2.html">
+                    <img src="content/thumbnails/sad_sad_days_thumb.jpg" alt="Sad Sad Days" class="thumbnail-image">
+                    <h2 class="thumbnail-title">Sad Sad Days</h2>
+                </a>
+            </div>
+
+            <div class="project-thumbnail thumbnail">
+                <a href="projet2.html">
+                    <img src="content/thumbnails/Les_solitudes_thumb.jpg" alt="Les solitudes" class="thumbnail-image">
+                    <h2 class="thumbnail-title">Les solitudes</h2>
+                </a>
+            </div>
+
+            <div class="project-thumbnail thumbnail">
+                <a href="projet2.html">
+                    <img src="content/thumbnails/les_larmes_du_ciel_thumb.jpg" alt="Les larmes du ciel" class="thumbnail-image">
+                    <h2 class="thumbnail-title">Les larmes du ciel</h2>
+                </a>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer__container project-category" data-category="contact">
+        <a href="contact.html" class="footer__item">Contact</a>
+    </footer>
+
+</body>
+</html>

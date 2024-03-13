@@ -2,11 +2,11 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Accueil - Maxime Decouard</title>
+    <title>Contact</title>
     <link rel="stylesheet" type="text/css" href="/styles.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script>
-        $(document).ready(function(){
+    $(document).ready(function(){
     // Gérer les clics sur les liens du menu pour les autres pages
     $('nav a:not(.load-textes)').click(function(event){
         event.preventDefault();
@@ -35,8 +35,9 @@
             });
     });
 });
-    </script>    
 
+    </script>
+    
 </head>
 <body>
     <header>
@@ -65,6 +66,10 @@
     </nav>
 
     <main id="project-content">
+        <div class="contact-details">
+            <p><a href="mailto:votre@email.com">maxdcrd@pm.me</a></p>
+            <p><a href="lien_vers_votre_reseau_social">Insta</a></p>
+        </div>
     </main>
 
     <footer class="footer__container project-category" data-category="contact">

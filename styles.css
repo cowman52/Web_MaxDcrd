@@ -1,5 +1,9 @@
+@import url('https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700&display=swap');
+
+
 body {
-    font-family: "Courier New", sans-serif;
+    font-family: "Courier Prime", monospace;
+    font-weight: 400;
     background-color: white;
     color: black;
     margin: 0;
@@ -50,50 +54,61 @@ a {
     color: black;
 }
 
+#project-content {
+    position: absolute;
+    top: 6em;
+    left: 30em;
+    display: flex; /* Activer le mode flex pour le conteneur */
+    flex-wrap: wrap; /* Permettre aux éléments de passer à la ligne si nécessaire */
+    flex-direction: row; /* Afficher les éléments en ligne horizontale */
+    justify-content: flex-start; /* Répartir l'espace disponible de manière égale entre les éléments */
+    z-index: 2;
+}
+
+#project-thumbnails {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    max-width: calc(8 * (5em + 20px)); /* Maximum de cinq vignettes affichées horizontalement */
+
+}
+
+
 .project-thumbnail {
     display: block;
-    border: 1px solid #756060;
-    padding: 1em;
     flex: 0 0 auto; /* Permettre aux vignettes de conserver leur taille d'origine */
-    height: 5em;
-    width: 5em; /* Définir une largeur fixe pour chaque vignette */
+    height: 7.5em;
+    width: 7.5em; /* Définir une largeur fixe pour chaque vignette */
     margin: 10px; /* Ajouter une marge autour de chaque vignette */
     background-color: #ffffff;
+}
+
+.project-thumbnail .thumbnail-image {
+    max-width: 100%; /* La largeur maximale de l'image est égale à la largeur de la vignette */
+    max-height: 100%; /* La hauteur maximale de l'image est égale à la hauteur de la vignette */
+    display: block; /* Afficher l'image en tant que bloc pour appliquer les marges automatiques */
+    margin: auto; /* Centrer l'image horizontalement */
+}
+
+.thumbnail-title {
+    display: none;
+    text-align: center; /* Centrer le texte */
+    position: relative; /* Position absolue pour permettre le centrage */
+    top: -30%; /* Positionner le titre au milieu de la vignette */
+    left: 50%; /* Positionner le titre au milieu de la vignette */
+    background-color: rgba(255, 255, 255, 0.7); /* Ajouter un fond semi-transparent pour le titre */
+    padding: 10px; /* Ajouter un espace autour du titre */
+    transform: translate(-50%, -50%); /* Centrer le titre */
+}
+
+/* Afficher les titres des vignettes uniquement lorsqu'ils sont survolés */
+.project-thumbnail:hover .thumbnail-title {
+    display: block;
 }
 
 .project-thumbnail h2 {
     font-size: 12px;
     margin-bottom: 5px;
-}
-
-.project-thumbnail p {
-    font-size: 10px;
-    margin-bottom: 10px;
-}
-
-#project-content {
-    position: absolute;
-    top: 6em;
-    left: 20em;
-    display: flex; /* Activer le mode flex pour le conteneur */
-    flex-wrap: wrap; /* Permettre aux éléments de passer à la ligne si nécessaire */
-    justify-content: space-around; /* Répartir l'espace disponible de manière égale entre les éléments */
-    z-index: 2;
-}
-
-.project-details {
-    text-align: left; /* Centrer le contenu horizontalement */
-    margin-right: 3em; /* Ajouter une marge à droite */
-    margin-top: 1em;
-}
-
-.project-details img {
-    display: block; /* Afficher l'image en tant que bloc pour gérer la marge automatique */
-    margin: 0 auto; /* Centrer l'image horizontalement */
-}
-
-.project-details p {
-    margin-top: 10px; /* Ajouter une marge en haut du paragraphe */
 }
 
 footer {
@@ -109,88 +124,84 @@ footer {
 
 .footer__container {
     display: flex;
-    justify-content: space-between; /* Ajouter cette ligne si vous voulez les mettre en deux colonnes */
-    align-items: left; /* Pour l'alignement vertical des éléments enfants */
-    height: 30px; /* Adjust this value to control the distance between "Archives" and "Contact". */
-    flex-direction: column; /* Ajouter cette ligne pour le flex-direction */
+    justify-content: space-between;
+    align-items: left;
+    height: 30px;
+    flex-direction: column;
 }
 
 .footer__item {
-    font-family: "Courier New", sans-serif;
-    font-weight: normal;
+    font-family: "Courier Prime", monospace;
+    font-weight: 400;
     font-size: 0.9em;
     margin-left: 3.4em;
-    color: #333; /* Ajouter cette ligne pour spécifier la couleur des liens dans le footer */
+    color: #333;
 }
 
-.contact-thumbnail {
+.contact-details {
     position: absolute;
     top: -0,8em;
-    left: 10em;/* Ajoutez ici vos styles spécifiques pour la vignette de contact */
-    border: none; /* Supprimez la bordure */
-    background-color: transparent; /* Fond transparent */
-    /* Autres styles personnalisés */
+    left: 10em;
+    border: none;
+    background-color: transparent;
 }
 
-.contact-thumbnail p {
-    font-size: 0.8em;
+.contact-details p {
+    font-size: 0.9em;
 }
 
-/* Styles pour les appareils mobiles */
 @media only screen and (max-width: 600px){ 
     #header-left {
-        font-size: 1em;
+        font-size: 3em;
     }
 
-    /* Redimensionner le menu de navigation pour qu'il occupe l'écran entier */
+    .subtitle {
+        font-size: 2em;
+    }
+
     nav {
         width: 100%;
         left: 3em;
-        top: 6em;
-        height: 100vh; /* Utiliser la hauteur de l'écran */
-        padding-top: 90px; /* Ajouter un décalage pour la barre de navigation fixée en haut */
-        overflow-y: auto; /* Ajouter un défilement si nécessaire */
+        top: 10em;
+        height: 100vh;
+        overflow-y: auto;
     }
 
-    /* Réduire la taille des éléments de menu */
     li {
-        font-size: 1em;
+        font-size: 2em;
         margin-bottom: 5px;
     }
 
-    /* Centrer le contenu principal */
     #project-content {
         position: relative;
-        top: 6em;
-        left: 0;
-        margin: 0 auto; /* Centrer horizontalement */
-        width: 6em; /* Utiliser la largeur disponible */
+        top: 15em;
+        left: 3em;
+        margin-right: 5em;
+        margin: 0 auto;
+        width: 6em;
         height: 6em;
     }
 
-    /* Réduire la taille des vignettes de projet */
     .project-thumbnail {
-        width: 90%; /* Utiliser la largeur disponible */
-        margin: 10px auto; /* Centrer horizontalement et ajouter une marge autour */
+        width: 8em;
+        height: 8em;
+        margin-left: 5em;
     }
 
-    /* Réduire la taille du pied de page */
     footer {
         padding-bottom: 10px;
     }
 
-    /* Réduire la taille des éléments de pied de page */
     .footer__item {
-        font-size: 1em;
-        margin-left: 3em;
+        font-size: 2em;
+        margin-left: 1.5em;
     }
 
-    /* Réduire la taille de la vignette de contact */
-    .contact-thumbnail {
-        font-size: 1em;
-        top: 6em; /* Ajuster la position */
+    .contact-details {
+        font-size: 2em;
+        top: 1.8em;
         left: 5em;
-        width: 90%; /* Utiliser la largeur disponible */
-        margin: 0 auto; /* Centrer horizontalement */
+        width: 90%;
+        margin: 0 auto;
     }
 }
