@@ -56,8 +56,8 @@ a {
 
 #project-content {
     position: absolute;
-    top: 6em;
-    left: 30em;
+    top: 6.5em;
+    left: 25em;
     display: flex; /* Activer le mode flex pour le conteneur */
     flex-wrap: wrap; /* Permettre aux éléments de passer à la ligne si nécessaire */
     flex-direction: row; /* Afficher les éléments en ligne horizontale */
@@ -66,61 +66,60 @@ a {
 }
 
 #project-thumbnails {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: flex-start;
-    max-width: calc(8 * (5em + 20px)); /* Maximum de cinq vignettes affichées horizontalement */
-
+    overflow-x: auto;
+    white-space: nowrap; /* Empêche le retour à la ligne des vignettes */
 }
 
 
 .project-thumbnail {
-    display: block;
-    flex: 0 0 auto; /* Permettre aux vignettes de conserver leur taille d'origine */
-    height: 7.5em;
-    width: 7.5em; /* Définir une largeur fixe pour chaque vignette */
-    margin: 10px; /* Ajouter une marge autour de chaque vignette */
+    position: relative; /* Ajouter position relative pour que les titres soient positionnés par rapport à cette vignette */
+    display: inline-block;
+    flex: 0 0 auto;
+    min-height: 7.5em;
+    width: 7.5em;
+    margin: 10px;
     background-color: #ffffff;
 }
 
 .project-thumbnail .thumbnail-image {
-    max-width: 100%; /* La largeur maximale de l'image est égale à la largeur de la vignette */
-    max-height: 100%; /* La hauteur maximale de l'image est égale à la hauteur de la vignette */
-    display: block; /* Afficher l'image en tant que bloc pour appliquer les marges automatiques */
-    margin: auto; /* Centrer l'image horizontalement */
-}
-
-.thumbnail-title {
-    display: none;
-    text-align: center; /* Centrer le texte */
-    position: relative; /* Position absolue pour permettre le centrage */
-    top: -30%; /* Positionner le titre au milieu de la vignette */
-    left: 50%; /* Positionner le titre au milieu de la vignette */
-    background-color: rgba(255, 255, 255, 0.7); /* Ajouter un fond semi-transparent pour le titre */
-    padding: 10px; /* Ajouter un espace autour du titre */
-    transform: translate(-50%, -50%); /* Centrer le titre */
-}
-
-/* Afficher les titres des vignettes uniquement lorsqu'ils sont survolés */
-.project-thumbnail:hover .thumbnail-title {
+    max-width: 100%;
+    max-height: 100%;
     display: block;
+    margin: auto;
 }
 
-.project-thumbnail h2 {
-    font-size: 12px;
-    margin-bottom: 5px;
+#full-image-container {
+    max-width: 70em;
+    max-height: 50em;
+    position: relative;
+    margin-top: 5em; /* Ajoute de l'espace en haut */
+    margin-left: 0.6em; /* Décalage vers la gauche pour aligner avec les vignettes */
+    margin-bottom: 2em;
+    text-align: center; /* Centrer le contenu horizontalement */
+}
+
+#full-image-container img {
+    max-width: 100%; /* Ajuste la largeur maximale de l'image pour qu'elle ne dépasse pas de son conteneur */
+    max-height: 100%; /* Permet à l'image de conserver son rapport hauteur/largeur */
+    object-fit: contain;
+}
+
+#full-image-container h2 {
+    font-size: 12px; /* Réduire la taille de la police */
+    position: absolute; /* Position absolue par rapport au conteneur parent */
+    top: -3em; /* Déplacer le titre vers le haut */
+    color: black; /* Couleur du texte */
 }
 
 footer {
     background-color: white;
     text-align: left;
-    position: fixed;
+    position: fixed; /* Modifier la position en 'fixed' */
     bottom: 0;
-    left: 0;
-    right: 0;
     z-index: 2;
-    padding-bottom: 20px;
+    padding-bottom: 1.5em;
 }
+
 
 .footer__container {
     display: flex;

@@ -7,35 +7,45 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script>
         $(document).ready(function(){
-    // Gérer les clics sur les liens du menu pour les autres pages
-    $('nav a:not(.load-textes)').click(function(event){
-        event.preventDefault();
-        var page_url = $(this).attr('href');
-        // Ajouter un paramètre aléatoire pour empêcher la mise en cache
-        var random_param = '?nocache=' + Math.random();
-        // Charger le contenu de la page avec le paramètre aléatoire
-        $('#project-content').load(page_url + random_param + ' #project-content > *', function(responseText, textStatus, XMLHttpRequest) {
-            if (textStatus === "success" || textStatus === "notmodified") {
-                // Réinitialiser des événements JavaScript ou plugins si nécessaire
-            }
-        });
-    });
-
-    // Gérer les clics sur les liens du menu "Textes"
-    $('nav a.load-textes').click(function(event){
-        event.preventDefault();
-        var page_url = $(this).attr('href');
-        $('#project-content').empty(); // Vider le contenu existant
-        // Charger le contenu des fichiers texte
-        fetch('content/Textes/Textes.txt')
-            .then(response => response.text())
-            .then(text => {
-                // Utiliser le contenu du texte pour l'afficher sur ta page HTML
-                $('#project-content').html(text);
+            // Gérer les clics sur les liens du menu pour les autres pages
+            $('nav a:not(.load-textes)').click(function(event){
+                event.preventDefault();
+                var page_url = $(this).attr('href');
+                // Ajouter un paramètre aléatoire pour empêcher la mise en cache
+                var random_param = '?nocache=' + Math.random();
+                // Charger le contenu de la page avec le paramètre aléatoire
+                $('#project-content').load(page_url + random_param + ' #project-content > *', function(responseText, textStatus, XMLHttpRequest) {
+                    if (textStatus === "success" || textStatus === "notmodified") {
+                        // Réinitialiser des événements JavaScript ou plugins si nécessaire
+                    }
+                });
             });
-    });
-});
-    </script>    
+        
+            // Gérer les clics sur les liens du menu "Textes"
+            $('nav a.load-textes').click(function(event){
+                event.preventDefault();
+                var page_url = $(this).attr('href');
+                $('#project-content').empty(); // Vider le contenu existant
+                // Charger le contenu des fichiers texte
+                fetch('content/Textes/Textes.txt')
+                    .then(response => response.text())
+                    .then(text => {
+                        // Utiliser le contenu du texte pour l'afficher sur ta page HTML
+                        $('#project-content').html(text);
+                    });
+            });
+        
+            // Gérer les clics sur les vignettes
+            $('#project-content').on('click', '.project-thumbnail', function(event){
+                event.preventDefault();
+                var imagePath = $(this).data('full-image');
+                var imageTitle = $(this).data('title'); // Récupérer le titre associé à l'image agrandie à partir de l'attribut data-title
+                // Mettre à jour la section des dessins avec l'image cliquée et son titre
+                $('#full-image-container').html('<h2>' + imageTitle + '</h2><img src="' + imagePath + '" alt="Dessin en grand">');
+            });
+        });
+        
+    </script>   
 
 </head>
 <body>
