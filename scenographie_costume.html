@@ -7,44 +7,98 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script>
         $(document).ready(function(){
-            // Gérer les clics sur les liens du menu pour les autres pages
-            $('nav a:not(.load-textes)').click(function(event){
-                event.preventDefault();
-                var page_url = $(this).attr('href');
-                // Ajouter un paramètre aléatoire pour empêcher la mise en cache
-                var random_param = '?nocache=' + Math.random();
-                // Charger le contenu de la page avec le paramètre aléatoire
-                $('#project-content').load(page_url + random_param + ' #project-content > *', function(responseText, textStatus, XMLHttpRequest) {
-                    if (textStatus === "success" || textStatus === "notmodified") {
-                        // Réinitialiser des événements JavaScript ou plugins si nécessaire
-                    }
-                });
-            });
-        
-            // Gérer les clics sur les liens du menu "Textes"
-            $('nav a.load-textes').click(function(event){
-                event.preventDefault();
-                var page_url = $(this).attr('href');
-                $('#project-content').empty(); // Vider le contenu existant
-                // Charger le contenu des fichiers texte
-                fetch('content/Textes/Textes.txt')
-                    .then(response => response.text())
-                    .then(text => {
-                        // Utiliser le contenu du texte pour l'afficher sur ta page HTML
-                        $('#project-content').html(text);
-                    });
-            });
-        
-            // Gérer les clics sur les vignettes
-            $('.project-thumbnail').click(function(event){
-                event.preventDefault();
-                var imagePath = $(this).data('full-image');
-                // Mettre à jour la section des dessins avec l'image cliquée
-                $('#drawing-display').html('<img src="' + imagePath + '" alt="Dessin en grand">');
-            });
+    // Gérer les clics sur les liens du menu pour les autres pages
+    $('.dynamic-link').click(function(event){
+        event.preventDefault();
+        var page_url = $(this).attr('href');
+        // Ajouter un paramètre aléatoire pour empêcher la mise en cache
+        var random_param = '?nocache=' + Math.random();
+        // Charger le contenu de la page avec le paramètre aléatoire
+        $('#project-content').load(page_url + random_param + ' #project-content > *', function(responseText, textStatus, XMLHttpRequest) {
+            if (textStatus === "success" || textStatus === "notmodified") {
+                // Réinitialiser des événements JavaScript ou plugins si nécessaire
+                setupThumbnailClickHandlers();
+            }
         });
+    });
+
+    // Gérer les clics sur les liens du menu "Textes"
+    $('nav a.load-textes').click(function(event){
+        event.preventDefault();
+        var page_url = $(this).attr('href');
+        $('#project-content').html(''); // Vider le contenu existant
+        // Charger le contenu des fichiers texte
+        fetch('content/Textes/Textes.txt' + '?nocache=' + Math.random())
+            .then(response => response.text())
+            .then(text => {
+                // Utiliser le contenu du texte pour l'afficher sur ta page HTML
+                $('#project-content').html('<pre class="text-pre">' + text + '</pre>');
+                setupThumbnailClickHandlers();
+            });
+    });
+
+    // Gérer les clics sur les liens du menu "Contact"
+    $('.footer__item.dynamic-link').click(function(event){
+        event.preventDefault();
+        var page_url = $(this).attr('href');
+        $('#project-content').empty(); // Vider le contenu existant
+        console.log("Clic sur le lien 'Bio / Contact'"); // Ajouter une instruction console.log()
+        // Charger le contenu du fichier biographie.txt
+        fetch('content/Bio/biographie.txt' + '?nocache=' + Math.random())
+            .then(response => response.text())
+            .then(text => {
+                // Utiliser le contenu du texte pour l'afficher sur la page HTML
+                $('#project-content').html('<pre class="text-pre">' + text + '</pre>');
+                setupThumbnailClickHandlers(); // Réinitialiser des événements JavaScript si nécessaire
+            });
+    });
+
+        // Fonction pour configurer les gestionnaires d'événements de clic sur les vignettes
+        function setupThumbnailClickHandlers() {
+    $('#project-thumbnails-container').on('click', '.project-thumbnail', function(event){
+        event.preventDefault();
+        var videoURL = $(this).data('video'); // Récupérer l'URL de la vidéo
+        var youtubeID = $(this).data('youtube-id'); // Récupérer l'ID de la vidéo YouTube
+        var imagePaths = $(this).data('images') ? $(this).data('images').split(',') : []; // Récupérer les chemins d'image (pour les projets qui utilisent des images)
+        var imageTitle = $(this).data('title');
+        var explicativeText = $(this).data('text');
         
-        </script>
+        var containerHTML = '<h2>' + imageTitle + '</h2>'; // Initialisez le HTML avec le titre
+
+        // Si une vidéo YouTube est disponible, intégrez-la dans le conteneur HTML
+        if (youtubeID) {
+            containerHTML += '<iframe width="1120" height="630" src="https://www.youtube.com/embed/' + youtubeID + '" frameborder="0" allowfullscreen></iframe>';
+        }
+        
+        // Si une vidéo est disponible, ajoutez-la au conteneur HTML
+        if (videoURL) {
+            containerHTML += '<video src="' + videoURL + '" controls></video>'; // Ajouter l'élément vidéo avec l'URL de la vidéo
+        }
+        
+        // Si des images sont disponibles, ajoutez-les au conteneur HTML
+        if (imagePaths.length > 0) {
+            imagePaths.forEach(function(path) {
+                containerHTML += '<img src="' + path + '" alt="' + imageTitle + '">';
+            });
+        }
+        
+        // Si un texte explicatif est disponible, ajoutez-le au conteneur HTML
+        if (explicativeText) {
+            containerHTML += '<div id="explicative-text-container"><p class="explicative-text">' + explicativeText + '</p></div>';
+        }
+        
+        // Affichez le contenu complet dans le conteneur
+        $('#full-image-container').html(containerHTML);
+    });
+}
+
+    // Configurer initialement les gestionnaires d'événements de clic sur les vignettes
+    setupThumbnailClickHandlers();
+});
+
+
+        
+    </script>
 
 
 </head>
@@ -52,106 +106,89 @@
     <header>
         <div class="container" id="header">
             <div id="header-left">
-                <p><a href="index.html">Maxime Decouard<br></a></p>
+                <p><a href="index.html" class="dynamic-link">Maxime Decouard<br></a></p>
             </div>
             <div class="subtitle">
-                <p><a href="index.html">plasticien scénographe</a></p>
+                <p><a href="index.html" class="dynamic-link">plasticien scénographe</a></p>
             </div>
         </div>
     </header>
-
+    
     <nav>
         <ul>
             <li class="project-category" data-category="scenography">
-                <a href="scenographie_costume.html"> Scénographie /<br>Costumes</a>
+                <a href="scenographie_costume.html" class="dynamic-link"> Scénographie /<br>Costumes</a>
             </li>
             <li class="project-category" data-category="drawings">
-                <a href="dessins.html" >Dessins</a>
+                <a href="dessins.html" class="dynamic-link">Dessins</a>
             </li>
             <li class="project-category" data-category="texts">
-                <a href="textes.html" class="load-textes">Textes</a>
+                <a href="textes.html" class="load-textes dynamic-link">Textes</a>
             </li>
         </ul>
     </nav>
 
     <main id="project-content">
-        <section id="project-thumbnails">
-            <div class="project-thumbnail thumbnail">
-                <a href="RED.html">
-                    <img src="content/thumbnails/RED_thumb.jpg" alt="RED" class="thumbnail-image">
-                    <h2 class="thumbnail-title">Red</h2>
-                </a>
+        <div id="project-thumbnails-container">
+            <div class="project-thumbnail" data-images="content/Scenographie_costume/RED/red_1.webp, content/Scenographie_costume/RED/red_2.webp, content/Scenographie_costume/RED/red_3.webp, content/Scenographie_costume/RED/red_4.webp, content/Scenographie_costume/RED/red_5.webp, content/Scenographie_costume/RED/red_6.webp" data-title="RED, toile double bombée, élastiques, 2023">
+                <img src="content/thumbnails/RED_thumb.webp" alt="RED" class="thumbnail-image">
             </div>
 
-            <!-- Répétez cette structure pour chaque projet -->
-            
-            <div class="project-thumbnail thumbnail">
-                <a href="projet2.html">
-                    <img src="content/thumbnails/you_re_dead_inside_thumb.jpg" alt="You're dead inside" class="thumbnail-image">
-                    <h2 class="thumbnail-title">You're Dead Inside</h2>
-                </a>
+            <div class="project-thumbnail" data-images="content/Scenographie_costume/dead_inside/dead_inside_4.webp, content/Scenographie_costume/dead_inside/dead_inside_5.webp, content/Scenographie_costume/dead_inside/dead_inside_2.webp, content/Scenographie_costume/dead_inside/dead_inside_3.webp, content/Scenographie_costume/dead_inside/dead_inside_6.webp, content/Scenographie_costume/dead_inside/dead_inside_1.webp" data-title="You're Dead inside, costume et shooting, 2023">
+                <img src="content/thumbnails/you_re_dead_inside_thumb.webp" alt="You're dead inside" class="thumbnail-image">
             </div>
 
-            <div class="project-thumbnail thumbnail">
-                <a href="projet2.html">
-                    <img src="content/thumbnails/le_rituel_du_vide_thumb.jpg" alt="Le rituel du vide" class="thumbnail-image">
-                    <h2 class="thumbnail-title">Le rituel du vide</h2>
-                </a>
+            <div class="project-thumbnail" data-images="..." data-video="content/Scenographie_costume/rituel_du_vide/maxime_decouard_le_rituel_du_vide_2017.mp4" data-title="Le rituel du vide, 2017">
+                    <img src="content/thumbnails/le_rituel_du_vide_thumb.webp" alt="Le rituel du vide" class="thumbnail-image">
             </div>
 
-            <div class="project-thumbnail thumbnail">
-                <a href="projet2.html">
-                    <img src="content/thumbnails/wandering_for_a_birth_thumb.jpg" alt="Wandering for a birth" class="thumbnail-image">
-                    <h2 class="thumbnail-title">Wandering for a birth</h2>
-                </a>
+            <div class="project-thumbnail" data-images="..." data-video="content/Scenographie_costume/wandering/Wandering_For_A_Birth_Maxime_Decourad_2017_VIMEO.mp4" data-title="Wandering for a birth, 2017">
+                    <img src="content/thumbnails/wandering_for_a_birth_thumb.webp" alt="Wandering for a birth" class="thumbnail-image">
             </div>
 
-            <div class="project-thumbnail thumbnail">
-                <a href="projet2.html">
-                    <img src="content/thumbnails/la_deconstruction_du_verbe_thumb.jpg" alt="La déconstruction du verbe" class="thumbnail-image">
-                    <h2 class="thumbnail-title">La déconstruction du verbe</h2>
-                </a>
+            <div class="project-thumbnail" data-images="..." data-video="content/Scenographie_costume/la_deconstruction/la_deconstruction_du_verbe_maxime_decouard_2017_short_VIMEO.mp4" data-title="La déconstruction du verbe, 2017">
+                    <img src="content/thumbnails/la_deconstruction_du_verbe_thumb.webp" alt="La déconstruction du verbe" class="thumbnail-image">
             </div>
 
-            <div class="project-thumbnail thumbnail">
-                <a href="projet2.html">
-                    <img src="content/thumbnails/eldorado_thumb.jpg" alt="Eldorado" class="thumbnail-image">
-                    <h2 class="thumbnail-title">Eldorado</h2>
-                </a>
+            <div class="project-thumbnail" data-images="content/Scenographie_costume/eldorado/eldorado.webp" data-title="Eldorado, ampoule, papillon de nuit, 2017">
+                    <img src="content/thumbnails/eldorado_thumb.webp" alt="Eldorado" class="thumbnail-image">
             </div>
 
-            <div class="project-thumbnail thumbnail">
-                <a href="projet2.html">
-                    <img src="content/thumbnails/glory_home_thumb.jpg" alt="Glory Home Burlesque Cabaret Club" class="thumbnail-image">
-                    <h2 class="thumbnail-title">Glory Home Burlesque Cabaret Club</h2>
-                </a>
+            <div class="project-thumbnail" data-images="content/Scenographie_costume/icares_modernes/icares_modernes_1.webp, content/Scenographie_costume/icares_modernes/icares_modernes_2.webp" data-title="Les Icares Modernes, écran, papillons de nuit, 2017">
+                <img src="content/thumbnails/icares_modernes_thumb.webp" alt="Les icares modernes" class="thumbnail-image">
             </div>
 
-            <div class="project-thumbnail thumbnail">
-                <a href="projet2.html">
-                    <img src="content/thumbnails/first_last_thumb.jpg" alt="First/Last" class="thumbnail-image">
-                    <h2 class="thumbnail-title">First/Last</h2>
-                </a>
+            <div class="project-thumbnail" data-video="content/Scenographie_costume/glory_home/Teaser_Glory_Home_v2.mp4" data-images="content/Scenographie_costume/glory_home/ghbcc_10.webp, content/Scenographie_costume/glory_home/Glory Home.webp, content/Scenographie_costume/glory_home/ghbcc_1.webp, content/Scenographie_costume/glory_home/ghbcc_2.webp, content/Scenographie_costume/glory_home/ghbcc_3.webp, content/Scenographie_costume/glory_home/ghbcc_4.webp, content/Scenographie_costume/glory_home/ghbcc_5.webp, content/Scenographie_costume/glory_home/ghbcc_7.webp, content/Scenographie_costume/glory_home/ghbcc_8.webp, content/Scenographie_costume/glory_home/ghbcc_9.webp" data-title="Glory Home Burlesque Cabaret Club, 2017">
+                <img src="content/thumbnails/glory_home_thumb.webp" alt="Glory Home Burlesque Cabaret Club" class="thumbnail-image">
             </div>
 
-            <div class="project-thumbnail thumbnail">
-                <a href="projet2.html">
-                    <img src="content/thumbnails/mother_f_thumb.jpg" alt="Mother-F" class="thumbnail-image">
-                    <h2 class="thumbnail-title">Mother-F</h2>
-                </a>
+            <div class="project-thumbnail" data-video="content/Scenographie_costume/first_last/first_last,_extrait_de__temps_ (720p).mp4" data-images="content/Scenographie_costume/first_last/first_last_1.webp, content/Scenographie_costume/first_last/first_last_2.webp, content/Scenographie_costume/first_last/first_last_3.webp, content/Scenographie_costume/first_last/first_last_4.webp" data-title="First / Last, chorégraphie Charlotte Nopal, 2019">
+                    <img src="content/thumbnails/first_last_thumb.webp" alt="First/Last" class="thumbnail-image">
             </div>
 
-            <div class="project-thumbnail thumbnail">
-                <a href="projet2.html">
-                    <img src="content/thumbnails/a_horse_in_my_bedroom_thumb.jpg" alt="A Horse In My Bedroom" class="thumbnail-image">
-                <h2 class="thumbnail-title">A Horse In My Bedroom</h2>
-                </a>
+            <div class="project-thumbnail" data-video="content/Scenographie_costume/mother_f/Mother-F 21.05.16.mp4" data-images="content/Scenographie_costume/mother_f/mother_f_1.webp, content/Scenographie_costume/mother_f/mother_f_2.webp, content/Scenographie_costume/mother_f/mother_f_3.webp, content/Scenographie_costume/mother_f/mother_f_4.webp, content/Scenographie_costume/mother_f/mother_f_5.webp" data-title="Mother-F, conception et chorégraphie Bruno Roque, scénographie Maxime Decouard, Gaël Rosticher, 2016">
+                    <img src="content/thumbnails/mother_f_thumb.webp" alt="Mother-F" class="thumbnail-image">
+            </div>
+
+            <div class="project-thumbnail" data-youtube-id="KcovQl5JKe8" data-title="A Horse In My Bedroom, costumes et accessoires pour le vidéoclip de Dimpaï, 2019">
+                    <img src="content/thumbnails/a_horse_in_my_bedroom_thumb.webp" alt="A Horse In My Bedroom" class="thumbnail-image">
+            </div>
+
+            <div class="project-thumbnail" data-images="content/Scenographie_costume/romeo_juliette/rj_1.webp, content/Scenographie_costume/romeo_juliette/rj_2.webp, content/Scenographie_costume/romeo_juliette/rj_3.webp, content/Scenographie_costume/romeo_juliette/rj_4.webp" data-title="Roméo & Juliette, costumes et décors pour la compagnie Tout&Versa, 2022">
+                <img src="content/thumbnails/romeo_juliette_thumb.webp" alt="Roméo & Juliette" class="thumbnail-image">
+            </div>
+        </div>
+        <section>
+            <div id="full-image-container">
+                <h2 id="full-image-title"></h2>
+                <div id="full-image"></div>
+                <div id="explicative-text-container"></div>
             </div>
         </section>
     </main>
 
     <footer class="footer__container project-category" data-category="contact">
-        <a href="contact.html" class="footer__item">Contact</a>
+        <a href="contact.html" class="footer__item dynamic-link load-contact">Bio / Contact</a>
     </footer>
 
 </body>
