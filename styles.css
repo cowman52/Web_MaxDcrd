@@ -95,7 +95,7 @@ a {
     margin-top: 5em; /* Ajoute de l'espace en haut */
     margin-left: 0.6em; /* Décalage vers la gauche pour aligner avec les vignettes */
     margin-bottom: 2em;
-    text-align: center; /* Centrer le contenu horizontalement */
+    text-align: left; /* Centrer le contenu horizontalement */
 }
 
 #full-image-container img {
@@ -152,14 +152,6 @@ footer {
 
 .contact-details p {
     font-size: 0.9em;
-}
-
-#project-thumbnails.dragging {
-    cursor: grabbing; /* Change le curseur pendant le drag */
-    user-select: none; /* Empêche la sélection de texte */
-}
-#project-thumbnails {
-    cursor: grab; /* Curseur par défaut */
 }
 
 @media only screen and (max-width: 600px){ 
