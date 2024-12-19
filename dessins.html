@@ -5,62 +5,11 @@
     <title>dessins</title>
     <link rel="stylesheet" type="text/css" href="/styles.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script>
-$(document).ready(function(){
-    // Gérer les clics sur les liens du menu pour les autres pages
-    $('nav a:not(.load-textes)').click(function(event){
-        event.preventDefault();
-        var page_url = $(this).attr('href');
-        // Ajouter un paramètre aléatoire pour empêcher la mise en cache
-        var random_param = '?nocache=' + Math.random();
-        // Charger le contenu de la page avec le paramètre aléatoire
-        $('#project-content').load(page_url + random_param + ' #project-content > *', function(responseText, textStatus, XMLHttpRequest) {
-            if (textStatus === "success" || textStatus === "notmodified") {
-                // Réinitialiser des événements JavaScript ou plugins si nécessaire
-            }
-        });
-    });
-
-    // Gérer les clics sur les liens du menu "Textes"
-    $('nav a.load-textes').click(function(event){
-        event.preventDefault();
-        var page_url = $(this).attr('href');
-        $('#project-content').empty(); // Vider le contenu existant
-        // Charger le contenu des fichiers texte
-        fetch('content/Textes/Textes.txt')
-            .then(response => response.text())
-            .then(text => {
-                // Utiliser le contenu du texte pour l'afficher sur ta page HTML
-                $('#project-content').html(text);
-            });
-    });
-
-    // Gérer les clics sur les vignettes
-    $('#project-content').on('click', '.project-thumbnail', function(event){
-        event.preventDefault();
-        var imagePath = $(this).data('full-image');
-        var imageTitle = $(this).data('title'); // Récupérer le titre associé à l'image agrandie à partir de l'attribut data-title
-        // Mettre à jour la section des dessins avec l'image cliquée et son titre
-        $('#full-image-container').html('<h2>' + imageTitle + '</h2><img src="' + imagePath + '" alt="Dessin en grand">');
-    });
-});
-
-</script>
-
+    <script src="content/js/script.js"></script>
 
 </head>
 <body>
-    <header>
-        <div class="container" id="header">
-            <div id="header-left">
-                <p><a href="index.html">Maxime Decouard<br></a></p>
-            </div>
-            <div class="subtitle">
-                <p><a href="index.html">plasticien scénographe</a></p>
-            </div>
-        </div>
-    </header>
-
+    <div id="header-placeholder"></div>
     <nav>
         <ul>
             <li class="project-category" data-category="scenography">
@@ -77,46 +26,46 @@ $(document).ready(function(){
 
     <main id="project-content">
         <section id="project-thumbnails">
-            <div class="project-thumbnail thumbnail" data-full-image="content/Dessins/Etude_pour_le_depeupleur.jpg" data-title="Étude pour le Dépeupleur">
-                    <img src="content/thumbnails/Etude_pour_le_depeupleur_thumb.jpg" alt="Étude pour le Dépeupleur" class="thumbnail-image">
+            <div class="project-thumbnail thumbnail" data-full-image="content/Dessins/Etude_pour_le_depeupleur.webp" data-title="Étude pour le Dépeupleur">
+                    <img src="content/thumbnails/Etude_pour_le_depeupleur_thumb.webp" alt="Étude pour le Dépeupleur" class="thumbnail-image">
             </div>
 
             <!-- Répétez cette structure pour chaque projet -->
             
-            <div class="project-thumbnail thumbnail"  data-full-image="content/Dessins/ton_désir_me_transforme.jpg" data-title="Ton désir me transforme en cheval">
-                    <img src="content/thumbnails/ton_désir_me_transforme_thumb.jpg" alt="Ton désir me transforme en cheval" class="thumbnail-image">
+            <div class="project-thumbnail thumbnail"  data-full-image="content/Dessins/ton_desir_me_transforme.webp" data-title="Ton désir me transforme en cheval">
+                    <img src="content/thumbnails/ton_desir_me_transforme_thumb.webp" alt="Ton désir me transforme en cheval" class="thumbnail-image">
             </div>
 
-            <div class="project-thumbnail thumbnail"  data-full-image="content/Dessins/la_bonne_nuit.jpg" data-title="La bonne nuit (petite mère)">
-                <img src="content/thumbnails/La_bonne_nuit_thumb.jpg" alt="La bonne nuit (petite mère)" class="thumbnail-image">
+            <div class="project-thumbnail thumbnail"  data-full-image="content/Dessins/la_bonne_nuit.webp" data-title="La bonne nuit (petite mère)">
+                <img src="content/thumbnails/La_bonne_nuit_thumb.webp" alt="La bonne nuit (petite mère)" class="thumbnail-image">
             </div>
 
-            <div class="project-thumbnail thumbnail"  data-full-image="content/Dessins/l_industrie.jpg" data-title="L'industrie (les petits pères)">
-                <img src="content/thumbnails/L'industrie_les_ petits_pères_thumb.jpg" alt="L'industrie (les petits pères)" class="thumbnail-image">
+            <div class="project-thumbnail thumbnail"  data-full-image="content/Dessins/l_industrie.webp" data-title="L'industrie (les petits pères)">
+                <img src="content/thumbnails/l_industrie_thumb.webp" alt="L'industrie (les petits pères)" class="thumbnail-image">
             </div>
 
-            <div class="project-thumbnail thumbnail"  data-full-image="content/Dessins/les_traditions_dansées.jpg" data-title="Les traditions dansées">
-                <img src="content/thumbnails/Les_Traditions_Dansées_thumb.jpg" alt="Les traditions dansées" class="thumbnail-image">
+            <div class="project-thumbnail thumbnail"  data-full-image="content/Dessins/les_traditions_dansees.webp" data-title="Les traditions dansées">
+                <img src="content/thumbnails/Les_Traditions_Dansees_thumb.webp" alt="Les traditions dansées" class="thumbnail-image">
             </div>
 
-            <div class="project-thumbnail thumbnail"  data-full-image="content/Dessins/d_ailleurs_les_pierres.jpg" data-title="D'ailleurs les pierres ne résonnent pas">
-                <img src="content/thumbnails/D_ailleurs_les_pierres_ne_parlent_pas_thumb.jpg" alt="D'ailleurs les pierres ne résonnent pas" class="thumbnail-image">
+            <div class="project-thumbnail thumbnail"  data-full-image="content/Dessins/d_ailleurs_les_pierres.webp" data-title="D'ailleurs les pierres ne résonnent pas">
+                <img src="content/thumbnails/D_ailleurs_les_pierres_ne_parlent_pas_thumb.webp" alt="D'ailleurs les pierres ne résonnent pas" class="thumbnail-image">
             </div>
 
-            <div class="project-thumbnail thumbnail"  data-full-image="content/Dessins/le_regne.jpg" data-title="Le règne de l'encéphale">
-                <img src="content/thumbnails/le_règne_de_l_encéphale_thumb.jpg" alt="Le règne de l'encéphale" class="thumbnail-image">
+            <div class="project-thumbnail thumbnail"  data-full-image="content/Dessins/le_regne.webp" data-title="Le règne de l'encéphale">
+                <img src="content/thumbnails/le_regne_de_l_encephale_thumb.webp" alt="Le règne de l'encéphale" class="thumbnail-image">
             </div>
 
-            <div class="project-thumbnail thumbnail"  data-full-image="content/Dessins/sad_sad_days.jpg" data-title="Sad Sad Days">
-                <img src="content/thumbnails/sad_sad_days_thumb.jpg" alt="Sad Sad Days" class="thumbnail-image">
+            <div class="project-thumbnail thumbnail"  data-full-image="content/Dessins/sad_sad_days.webp" data-title="Sad Sad Days">
+                <img src="content/thumbnails/sad_sad_days_thumb.webp" alt="Sad Sad Days" class="thumbnail-image">
             </div>
 
-            <div class="project-thumbnail thumbnail"  data-full-image="content/Dessins/les_solitudes.jpg" data-title="Les Solitudes">
-                <img src="content/thumbnails/Les_solitudes_thumb.jpg" alt="Les Solitudes" class="thumbnail-image">
+            <div class="project-thumbnail thumbnail"  data-full-image="content/Dessins/les_solitudes.webp" data-title="Les Solitudes">
+                <img src="content/thumbnails/Les_solitudes_thumb.webp" alt="Les Solitudes" class="thumbnail-image">
             </div>
 
-            <div class="project-thumbnail thumbnail"  data-full-image="content/Dessins/les_larmes_du_ciel.jpg" data-title="Les Larmes du Ciel">
-                <img src="content/thumbnails/les_larmes_du_ciel_thumb.jpg" alt="Les Larmes du Ciel" class="thumbnail-image">
+            <div class="project-thumbnail thumbnail"  data-full-image="content/Dessins/les_larmes_du_ciel.webp" data-title="Les Larmes du Ciel">
+                <img src="content/thumbnails/les_larmes_du_ciel_thumb.webp" alt="Les Larmes du Ciel" class="thumbnail-image">
             </div>
         </section>
         <section>
@@ -126,10 +75,6 @@ $(document).ready(function(){
             </div>
         </section>        
     </main>
-
-    <footer class="footer__container project-category" data-category="contact">
-        <a href="contact.html" class="footer__item">Contact</a>
-    </footer>
-
+    <div id="footer-placeholder"></div>
 </body>
 </html>

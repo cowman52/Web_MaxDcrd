@@ -15,7 +15,7 @@ header {
     background-color: white;
     border-left: 1cm solid white;
     padding: 10px;
-    z-index: 2;
+    z-index: 100;
 }
 
 #header-left {
@@ -113,33 +113,38 @@ a {
 
 footer {
     background-color: white;
+    height: 60px;
     text-align: left;
     position: fixed; /* Modifier la position en 'fixed' */
     bottom: 0;
-    z-index: 2;
-    padding-bottom: 1.5em;
+    z-index: 100;
+    padding: 0 1.5em; /* Espacement horizontal seulement */
+    display: flex; /* Assurez-vous qu'il utilise Flexbox */
+    align-items: center; /* Centrer verticalement */
 }
 
 
 .footer__container {
     display: flex;
+    flex-direction: row; /* Si les éléments doivent être alignés horizontalement */
     justify-content: space-between;
-    align-items: left;
-    height: 30px;
-    flex-direction: column;
+    align-items: center; /* Alignement vertical des éléments */
+    height: auto; /* Adapte la hauteur automatiquement */
 }
+
 
 .footer__item {
     font-family: "Courier Prime", monospace;
     font-weight: 400;
     font-size: 0.9em;
-    margin-left: 3.4em;
+    margin-left: 1.5em;
+    margin-bottom: 1.5em;
     color: #333;
 }
 
 .contact-details {
     position: absolute;
-    top: -0,8em;
+    top: -0.8em;
     left: 10em;
     border: none;
     background-color: transparent;
@@ -147,6 +152,14 @@ footer {
 
 .contact-details p {
     font-size: 0.9em;
+}
+
+#project-thumbnails.dragging {
+    cursor: grabbing; /* Change le curseur pendant le drag */
+    user-select: none; /* Empêche la sélection de texte */
+}
+#project-thumbnails {
+    cursor: grab; /* Curseur par défaut */
 }
 
 @media only screen and (max-width: 600px){ 
